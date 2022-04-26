@@ -80,7 +80,7 @@ func (RkaService) AddRKA(ctx context.Context, req *rka.RKA) (*model.Responses, e
 	}, nil
 }
 
-func (RkaService) AddUserRKA(ctx context.Context, req *rka.UserRKA) (*model.Responses, error) {
+func (RkaService) AddUserRKA(ctx context.Context, req *rka.RequestUserRKA) (*model.Responses, error) {
 	rpcConn, err := rpc.NewRkaServiceRPC()
 	if err != nil {
 		logrus.Error(fmt.Sprintf("cannot connect to server Rpc : %v", err))

@@ -65,7 +65,7 @@ func (*RkaController) AddRKA(c echo.Context) (err error) {
 }
 
 func (*RkaController) AddUserRKA(c echo.Context) (err error) {
-	request := new(rka.UserRKA)
+	request := new(rka.RequestUserRKA)
 
 	if err := c.Bind(request); err != nil {
 		return model.ResponseContext(400, err.Error(), nil, c)

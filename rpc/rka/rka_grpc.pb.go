@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type RkaServiceClient interface {
 	Adduser(ctx context.Context, in *User, opts ...grpc.CallOption) (*ResponseUser, error)
 	AddRKA(ctx context.Context, in *RKA, opts ...grpc.CallOption) (*ResponseRKA, error)
-	AddUserRKA(ctx context.Context, in *UserRKA, opts ...grpc.CallOption) (*ResponseUserRKA, error)
+	AddUserRKA(ctx context.Context, in *RequestUserRKA, opts ...grpc.CallOption) (*ResponseUserRKA, error)
 	AccumulationRKA(ctx context.Context, in *RequestAccumulation, opts ...grpc.CallOption) (*ResponseAccumulationRKA, error)
 }
 
@@ -54,7 +54,7 @@ func (c *rkaServiceClient) AddRKA(ctx context.Context, in *RKA, opts ...grpc.Cal
 	return out, nil
 }
 
-func (c *rkaServiceClient) AddUserRKA(ctx context.Context, in *UserRKA, opts ...grpc.CallOption) (*ResponseUserRKA, error) {
+func (c *rkaServiceClient) AddUserRKA(ctx context.Context, in *RequestUserRKA, opts ...grpc.CallOption) (*ResponseUserRKA, error) {
 	out := new(ResponseUserRKA)
 	err := c.cc.Invoke(ctx, "/rka.RkaService/AddUserRKA", in, out, opts...)
 	if err != nil {
@@ -78,7 +78,7 @@ func (c *rkaServiceClient) AccumulationRKA(ctx context.Context, in *RequestAccum
 type RkaServiceServer interface {
 	Adduser(context.Context, *User) (*ResponseUser, error)
 	AddRKA(context.Context, *RKA) (*ResponseRKA, error)
-	AddUserRKA(context.Context, *UserRKA) (*ResponseUserRKA, error)
+	AddUserRKA(context.Context, *RequestUserRKA) (*ResponseUserRKA, error)
 	AccumulationRKA(context.Context, *RequestAccumulation) (*ResponseAccumulationRKA, error)
 	mustEmbedUnimplementedRkaServiceServer()
 }
@@ -93,7 +93,7 @@ func (UnimplementedRkaServiceServer) Adduser(context.Context, *User) (*ResponseU
 func (UnimplementedRkaServiceServer) AddRKA(context.Context, *RKA) (*ResponseRKA, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddRKA not implemented")
 }
-func (UnimplementedRkaServiceServer) AddUserRKA(context.Context, *UserRKA) (*ResponseUserRKA, error) {
+func (UnimplementedRkaServiceServer) AddUserRKA(context.Context, *RequestUserRKA) (*ResponseUserRKA, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserRKA not implemented")
 }
 func (UnimplementedRkaServiceServer) AccumulationRKA(context.Context, *RequestAccumulation) (*ResponseAccumulationRKA, error) {
@@ -149,7 +149,7 @@ func _RkaService_AddRKA_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _RkaService_AddUserRKA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserRKA)
+	in := new(RequestUserRKA)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func _RkaService_AddUserRKA_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/rka.RkaService/AddUserRKA",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RkaServiceServer).AddUserRKA(ctx, req.(*UserRKA))
+		return srv.(RkaServiceServer).AddUserRKA(ctx, req.(*RequestUserRKA))
 	}
 	return interceptor(ctx, in, info, handler)
 }
