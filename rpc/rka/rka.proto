@@ -16,7 +16,7 @@ message User{
 message RKA{
     int64 id          = 1;
     string name_rka   = 2;
-    string target_rka = 3;
+    int32 target_rka = 3;
     google.protobuf.Timestamp created_at = 4;
     google.protobuf.Timestamp updated_at = 5;
     google.protobuf.Timestamp deleted_at = 6;
