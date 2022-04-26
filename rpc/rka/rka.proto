@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package rka;
+option go_package="rpc/rka";
+
+import "google/protobuf/timestamp.proto";
+
+message User{
+    int64 id    = 1;
+    string name = 2;
+    google.protobuf.Timestamp created_at = 3;
+    google.protobuf.Timestamp updated_at = 4;
+    google.protobuf.Timestamp deleted_at = 5;
+}
+
+message RKA{
+    int64 id          = 1;
+    string name_rka   = 2;
+    string target_rka = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+    google.protobuf.Timestamp deleted_at = 6;
+}
+
+message UserRKA{
+    int64 id      = 1;
+    int64 rka_id  = 2;
+    int64 user_id = 3;
+    int64 visited = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+    google.protobuf.Timestamp deleted_at = 7;
+}
+
+message ResponseRKA{
+    int32 code        = 1;
+    string message    = 2;
+    repeated RKA data = 3;
+}
+
+message ResponseUser{
+    int32 code     = 1;
+    string message = 2;
+    User data      = 3;
+}
+
+message ResponseUserRKA{
+    int32 code     = 1;
+    string message = 2;
+    User data      = 3;
+}
+
+message ResponseAccumulationRKA{
+    int32 code     = 1;
+    string message = 2;
+    bytes progress_visited = 3;
+}
+
+message RequestAccumulation{
+    int64 user_id = 1;
+    int32 yaer    = 2;
+    string month  = 3;
+}
+
+service RkaService{
+    rpc Adduser(User) returns (ResponseUser){};
+    rpc AddRKA(RKA) returns (ResponseRKA){};
+    rpc AddUserRKA(UserRKA) returns (ResponseUserRKA){};
+    rpc AccumulationRKA(RequestAccumulation) returns (ResponseAccumulationRKA){};
+}
