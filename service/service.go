@@ -6,6 +6,7 @@ import (
 	"bribrain-initial/rpc"
 	"bribrain-initial/rpc/rka"
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/sirupsen/logrus"
@@ -135,9 +136,12 @@ func (RkaService) AccumulationRKA(ctx context.Context, req *rka.RequestAccumulat
 		}, nil
 	}
 
+	var newData []model.AccumulationRKA
+	json.Unmarshal(res.ProgressVisited, &newData)
+
 	return &model.Responses{
 		Code:    int(res.Code),
 		Message: res.Message,
-		Data:    res.ProgressVisited,
+		Data:    newData,
 	}, nil
 }

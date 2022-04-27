@@ -33,7 +33,7 @@ func (*RkaController) Adduser(c echo.Context) (err error) {
 	services := service.NewServiceRka()
 	response, err := services.Adduser(c.Request().Context(), request)
 	if err != nil {
-		return model.ResponseContext(response.Code, response.Message, nil, c)
+		return model.ResponseContext(400, err.Error(), nil, c)
 	}
 
 	if response.Code != 200 {
@@ -53,7 +53,7 @@ func (*RkaController) AddRKA(c echo.Context) (err error) {
 	services := service.NewServiceRka()
 	response, err := services.AddRKA(c.Request().Context(), request)
 	if err != nil {
-		return model.ResponseContext(response.Code, response.Message, nil, c)
+		return model.ResponseContext(400, err.Error(), nil, c)
 	}
 
 	if response.Code != 200 {
@@ -73,7 +73,7 @@ func (*RkaController) AddUserRKA(c echo.Context) (err error) {
 	services := service.NewServiceRka()
 	response, err := services.AddUserRKA(c.Request().Context(), request)
 	if err != nil {
-		return model.ResponseContext(response.Code, response.Message, nil, c)
+		return model.ResponseContext(400, err.Error(), nil, c)
 	}
 
 	if response.Code != 200 {
@@ -90,15 +90,16 @@ func (*RkaController) AccumulationRKA(c echo.Context) (err error) {
 	month := c.QueryParam("month")
 	userIDInt, _ := strconv.Atoi(userId)
 	yearInt, _ := strconv.Atoi(year)
+	monthInt, _ := strconv.Atoi(month)
 
 	services := service.NewServiceRka()
 	response, err := services.AccumulationRKA(c.Request().Context(), &rka.RequestAccumulation{
 		UserId: int64(userIDInt),
 		Yaer:   int32(yearInt),
-		Month:  month,
+		Month:  int32(monthInt),
 	})
 	if err != nil {
-		return model.ResponseContext(response.Code, response.Message, nil, c)
+		return model.ResponseContext(400, err.Error(), nil, c)
 	}
 
 	if response.Code != 200 {

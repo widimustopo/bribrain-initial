@@ -51,7 +51,7 @@ message ResponseUser{
 message ResponseUserRKA{
     int32 code     = 1;
     string message = 2;
-    User data      = 3;
+    repeated UserRKA data   = 3;
 }
 
 message ResponseAccumulationRKA{
@@ -63,7 +63,7 @@ message ResponseAccumulationRKA{
 message RequestAccumulation{
     int64 user_id = 1;
     int32 yaer    = 2;
-    string month  = 3;
+    int32 month  = 3;
 }
 
 service RkaService{
